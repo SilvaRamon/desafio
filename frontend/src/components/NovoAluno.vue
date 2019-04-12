@@ -48,6 +48,7 @@
             <v-text-field
               v-model="cep"
               :rules="regrasCep"
+              :mask="mascaraCep"
               :counter="8"
               label="CEP"
               required
@@ -71,8 +72,9 @@
             ></v-text-field>
           </v-flex>
           <v-flex xs12 md12 text-xs-right pt-2>
-            <v-btn dark color="primary">Cadastrar</v-btn>
-            <v-btn dark color="primary">Limpar</v-btn>
+            <v-btn dark color="primary"><v-icon>arrow_left</v-icon> Voltar</v-btn>
+            <v-btn dark color="primary"><v-icon>library_add</v-icon> Cadastrar</v-btn>
+            <v-btn dark color="primary"><v-icon>delete</v-icon> Limpar</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -117,11 +119,12 @@ export default {
         v => !!v || 'CEP é obrigatório.'
       ],
       regrasEmail: [
-        v => !!v || 'Email é obrigatório.'
+        v => !!v || 'Email é obrigatório.',
+        v => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'Invalid e-mail.'
       ],
       regrasTelefone: [
         v => !!v || 'Telefone é obrigatório.'
-      ],
+      ]
     };
   },
 };
