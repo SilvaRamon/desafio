@@ -109,14 +109,15 @@ export default {
       ],
       regrasCpf: [
         v => !!v || 'CPF é obrigatório.',
-        v => v.length <= 11 || 'CPF deve ter exatamente de 11 caracteres'
+        v => v.length === 11 || 'CPF deve ter exatamente de 11 caracteres.'
       ],
       regrasEndereco: [
         v => !!v || 'Endereço é obrigatório.',
-        v => v.length <= 120 || 'Endereço deve até exatamente de 120 caracteres'
+        v => v.length <= 120 || 'Endereço deve até exatamente de 120 caracteres.'
       ],
       regrasCep: [
-        v => !!v || 'CEP é obrigatório.'
+        v => !!v || 'CEP é obrigatório.',
+        v => v.length === 8 || 'CEP deve conter exatamente 8 caracteres.'
       ],
       regrasEmail: [
         v => !!v || 'Email é obrigatório.',
