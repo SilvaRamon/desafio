@@ -5,7 +5,7 @@
         <v-flex xs12>
           <v-card>
             <v-card-title class="headline font-weight-bold">
-              Lista de alunos
+              Lista de cursos
               <v-spacer/>
               <v-text-field
                 v-model="search"

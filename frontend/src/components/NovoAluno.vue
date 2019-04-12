@@ -11,6 +11,7 @@
             <v-text-field
               v-model="codigo"
               :rules="regrasCodigo"
+              :mask="mascaraCodigo"
               :counter="9"
               label="Código do aluno"
               required
@@ -72,7 +73,7 @@
             ></v-text-field>
           </v-flex>
           <v-flex xs12 md12 text-xs-right pt-2>
-            <v-btn dark color="primary"><v-icon>arrow_left</v-icon> Voltar</v-btn>
+            <v-btn to="/alunos" dark color="primary"><v-icon>arrow_left</v-icon> Voltar</v-btn>
             <v-btn dark color="primary"><v-icon>library_add</v-icon> Cadastrar</v-btn>
             <v-btn dark color="primary"><v-icon>delete</v-icon> Limpar</v-btn>
           </v-flex>
@@ -90,6 +91,7 @@ export default {
       titulo: 'Cadastrar novo aluno',
       validar: false,
       codigo: '',
+      mascaraCodigo: '#########',
       nome: '',
       cpf: '',
       mascaraCpf: '###.###.###-##',
@@ -101,7 +103,7 @@ export default {
       mascaraTelefone: '(##) #####-####',
       regrasCodigo: [
         v => !!v || 'Código é obrigatório.',
-        v => v.length <= 9 || 'Código deve ter no máximo 9 caracteres.'
+        v => v.length <= 9 || 'Código deve ter no máximo 9 dígitos.'
       ],
       regrasNome: [
         v => !!v || 'Nome é obrigatório.',
@@ -109,7 +111,7 @@ export default {
       ],
       regrasCpf: [
         v => !!v || 'CPF é obrigatório.',
-        v => v.length === 11 || 'CPF deve ter exatamente de 11 caracteres.'
+        v => v.length === 11 || 'CPF deve ter exatamente de 11 dígitos.'
       ],
       regrasEndereco: [
         v => !!v || 'Endereço é obrigatório.',
@@ -117,14 +119,15 @@ export default {
       ],
       regrasCep: [
         v => !!v || 'CEP é obrigatório.',
-        v => v.length === 8 || 'CEP deve conter exatamente 8 caracteres.'
+        v => v.length === 8 || 'CEP deve conter exatamente 8 dígitos.'
       ],
       regrasEmail: [
         v => !!v || 'Email é obrigatório.',
         v => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'Invalid e-mail.'
       ],
       regrasTelefone: [
-        v => !!v || 'Telefone é obrigatório.'
+        v => !!v || 'Telefone é obrigatório.',
+        v => v.length === 11 || 'Telefone deve conter exatamente 11 dígitos.'
       ]
     };
   },
