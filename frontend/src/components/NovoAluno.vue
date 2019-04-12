@@ -1,0 +1,128 @@
+<template>
+  <div>
+    <v-form v-model="validar">
+      <v-container fluid>
+        <v-layout row wrap>
+          
+          <v-flex xs12 class="headline font-weight-bold">
+              {{ titulo }}
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+              v-model="codigo"
+              :rules="regrasCodigo"
+              :counter="9"
+              label="Código do aluno"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+              v-model="nome"
+              :rules="regrasNome"
+              :counter="60"
+              label="Nome completo"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+              v-model="cpf"
+              :rules="regrasCpf"
+              :counter="11"
+              :mask="mascaraCpf"
+              label="CPF"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+              v-model="endereco"
+              :rules="regrasEndereco"
+              :counter="120"
+              label="Endereço"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+              v-model="cep"
+              :rules="regrasCep"
+              :counter="8"
+              label="CEP"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+              v-model="email"
+              :rules="regrasEmail"
+              label="E-mail"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+              v-model="telefone"
+              :rules="regrasTelefone"
+              :mask="mascaraTelefone"
+              label="Telefone"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md12 text-xs-right pt-2>
+            <v-btn dark color="primary">Cadastrar</v-btn>
+            <v-btn dark color="primary">Limpar</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'NovoAluno',
+  data() {
+    return {
+      titulo: 'Cadastrar novo aluno',
+      validar: false,
+      codigo: '',
+      nome: '',
+      cpf: '',
+      mascaraCpf: '###.###.###-##',
+      endereco: '',
+      cep: '',
+      mascaraCep: '#####-###',
+      email: '',
+      telefone: '',
+      mascaraTelefone: '(##) #####-####',
+      regrasCodigo: [
+        v => !!v || 'Código é obrigatório.',
+        v => v.length <= 9 || 'Código deve ter no máximo 9 caracteres.'
+      ],
+      regrasNome: [
+        v => !!v || 'Nome é obrigatório.',
+        v => v.length <= 60 || 'Nome deve ter menos de 60 caracteres.'
+      ],
+      regrasCpf: [
+        v => !!v || 'CPF é obrigatório.',
+        v => v.length <= 11 || 'CPF deve ter exatamente de 11 caracteres'
+      ],
+      regrasEndereco: [
+        v => !!v || 'Endereço é obrigatório.',
+        v => v.length <= 120 || 'Endereço deve até exatamente de 120 caracteres'
+      ],
+      regrasCep: [
+        v => !!v || 'CEP é obrigatório.'
+      ],
+      regrasEmail: [
+        v => !!v || 'Email é obrigatório.'
+      ],
+      regrasTelefone: [
+        v => !!v || 'Telefone é obrigatório.'
+      ],
+    };
+  },
+};
+</script>

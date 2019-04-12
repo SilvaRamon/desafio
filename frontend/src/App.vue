@@ -5,7 +5,7 @@
         <v-toolbar-title>Desafio CEUMA</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn flat>Alunos</v-btn>
+          <v-btn flat to="/alunos">Alunos</v-btn>
           <v-btn flat>Cursos</v-btn>
           <v-btn flat>Sobre</v-btn>
         </v-toolbar-items>
