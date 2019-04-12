@@ -31,7 +31,7 @@
               </v-alert>
             </v-data-table>
             <div class="text-xs-right">
-              <v-btn dark color="primary" to="/cursos">
+              <v-btn dark color="primary" to="/cursos/novo">
                 Novo Curso
               </v-btn>
             </div>
