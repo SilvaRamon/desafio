@@ -17,7 +17,7 @@
             </v-card-title>
             <v-data-table
               :headers="headers"
-              :items="desserts"
+              :items="alunos"
               :search="search"
             >
               <template v-slot:items="props">
@@ -66,7 +66,7 @@ export default {
         { text: 'E-mail', value: 'email' },
         { text: 'Telefone', value: 'telefone' }
       ],
-      desserts: [
+      alunos: [
         {
           codigo: '123',
           nome: 'Pessoa 1',
