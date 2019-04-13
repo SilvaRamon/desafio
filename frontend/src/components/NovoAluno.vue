@@ -73,9 +73,15 @@
             ></v-text-field>
           </v-flex>
           <v-flex xs12 md12 text-xs-right pt-2>
-            <v-btn to="/alunos" dark color="primary"><v-icon>arrow_left</v-icon> Voltar</v-btn>
-            <v-btn dark color="primary"><v-icon>library_add</v-icon> Cadastrar</v-btn>
-            <v-btn dark color="primary"><v-icon>delete</v-icon> Limpar</v-btn>
+            <v-btn to="/alunos" dark color="primary">
+              <v-icon>arrow_left</v-icon> Voltar
+            </v-btn>
+            <v-btn dark color="primary">
+              <v-icon>library_add</v-icon> Cadastrar
+            </v-btn>
+            <v-btn dark color="primary">
+              <v-icon>delete</v-icon> Limpar
+            </v-btn>
           </v-flex>
         </v-layout>
       </v-container>

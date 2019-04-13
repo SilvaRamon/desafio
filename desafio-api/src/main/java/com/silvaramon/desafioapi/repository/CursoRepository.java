@@ -7,5 +7,5 @@ import com.silvaramon.desafioapi.model.Curso;
 
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long>{
-
+	
 }

@@ -1,16 +1,23 @@
 package com.silvaramon.desafioapi.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Curso {
 	@Id
 	@GeneratedValue
+	@Column(name="id")
 	private Long id;
 	@Column(name="codigo")
 	private Long codigo;
@@ -20,6 +27,8 @@ public class Curso {
 	private String dataCadastro;
 	@Column(name="carga_horaria")
 	private String cargaHoraria;
+	@OneToMany(mappedBy = "curso", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Aluno> alunos;
 	
 	public Curso() {
 		super();
@@ -63,5 +72,13 @@ public class Curso {
 
 	public void setCargaHoraria(String cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
+	}
+	
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
+	
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
 	}
 }

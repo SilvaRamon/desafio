@@ -4,6 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Aluno {
@@ -24,6 +28,10 @@ public class Aluno {
 	private String email;
 	@Column
 	private String telefone;
+	@ManyToOne
+	@JoinColumn(name = "id_curso")
+	@JsonBackReference
+	private Curso curso;
 	
 	public Aluno() {
 		super();
@@ -92,4 +100,13 @@ public class Aluno {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+	
 }
