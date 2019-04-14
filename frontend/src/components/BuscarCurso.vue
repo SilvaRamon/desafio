@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'BuscarCurso',
   data() {
@@ -60,27 +62,16 @@ export default {
         { text: 'Data de Cadastro', value: 'dataCadastro' },
         { text: 'Carga Horária', value: 'cargaHoraria' }
       ],
-      cursos: [
-        {
-          codigo: '123',
-          nome: 'Administração',
-          dataCadastro: '11/04/2019',
-          cargaHoraria: '2400h'
-        },
-        {
-          codigo: '223',
-          nome: 'Direito',
-          dataCadastro: '12/04/2019',
-          cargaHoraria: '2400h'
-        },
-        {
-          codigo: '323',
-          nome: 'Medicina',
-          dataCadastro: '11/04/2019',
-          cargaHoraria: '2400h'
-        },
-      ]
+      cursos: [],
     };
+  },
+  created() {
+    axios.get('http://localhost:3000/api/cursos')
+      .then(response => {
+        this.cursos = response.data;
+        console.log(this.cursos);
+      })
+      .catch(error => console.log(error));
   },
 };
 </script>
