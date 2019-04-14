@@ -29,14 +29,13 @@
                 <td class="text-xs-left">{{ props.item.email }}</td>
                 <td class="text-xs-left">{{ props.item.telefone }}</td>
                 <td class="text-xs-left">
-                  <v-btn flat icon color="red" title="Remover">
+                  <v-btn flat icon color="red" title="Remover"
+                    @click="deleteAluno(props.item)"
+                  >
                     <v-icon>delete</v-icon>
                   </v-btn>
                   <v-btn flat icon color="indigo" title="Editar">
                     <v-icon>edit</v-icon>
-                  </v-btn>
-                  <v-btn flat icon color="black" title="Detalhar">
-                    <v-icon>more_vert</v-icon>
                   </v-btn>
                 </td>
               </template>
@@ -65,7 +64,7 @@ export default {
     return {
       titulo: 'Buscar alunos',
       search: '',
-        headers: [
+      headers: [
         {
           text: 'Código',
           align: 'left',
@@ -78,13 +77,25 @@ export default {
         { text: 'CEP', value: 'cep' },
         { text: 'E-mail', value: 'email' },
         { text: 'Telefone', value: 'telefone' },
-        { text: 'Ações' }
+        { text: 'Ações', value: '' }
       ],
       alunos: [],
     };
   },
+  methods: {
+    deleteAluno(obj) {
+      axios.delete('http://localhost:3000/api/alunos/'+obj.id)
+        .then(response => {
+          this.alunos.splice(this.alunos.indexOf(obj), 1);
+          console.log(response.status);
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
+    }
+  },
   mounted() {
-    axios.get('http://localhost:3000/api/alunos')
+    axios.get('http://localhost:3000/api/alunos') 
       .then(response => {
         this.alunos = response.data;
       })

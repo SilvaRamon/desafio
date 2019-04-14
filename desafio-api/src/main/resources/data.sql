@@ -9,5 +9,5 @@ insert into ALUNO (id, codigo, nome, cpf, endereco, cep, email, telefone, id_cur
 insert into ALUNO (id, codigo, nome, cpf, endereco, cep, email, telefone, id_curso) values (4, 201901004, 'jeremias', '310.120.212-11', 'Rua 22, casa 33', '65058-123', 'jeremias@ceuma.com', '(98) 95822-3144', 2);
 insert into ALUNO (id, codigo, nome, cpf, endereco, cep, email, telefone, id_curso) values (5, 201901005, 'martiniana', '112.355.252-51', 'Rua 12, casa 13', '65058-101', 'martiniana@ceuma.com', '(98) 95852-3141', 2);
 
-insert into ALUNO (id, codigo, nome, cpf, endereco, cep, email, telefone, id_curso) values (6, 201901006, 'marcos', '123.345.562-21', 'Rua 52, casa 32', '65058-031', 'marcos@ceuma.com', '(98) 94872-2254', 2);
-insert into ALUNO (id, codigo, nome, cpf, endereco, cep, email, telefone, id_curso) values (7, 201901007, 'paulo', '323.747.522-23', 'Rua 45, casa 12', '65058-201', 'paulo@ceuma.com', '(98) 99832-1264', 2);
+insert into ALUNO (id, codigo, nome, cpf, endereco, cep, email, telefone, id_curso) values (6, 201901006, 'marcos', '123.345.562-21', 'Rua 52, casa 32', '65058-031', 'marcos@ceuma.com', '(98) 94872-2254', 3);
+insert into ALUNO (id, codigo, nome, cpf, endereco, cep, email, telefone, id_curso) values (7, 201901007, 'paulo', '323.747.522-23', 'Rua 45, casa 12', '65058-201', 'paulo@ceuma.com', '(98) 99832-1264', 3);
