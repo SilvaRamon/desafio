@@ -22,12 +22,23 @@
             >
               <template v-slot:items="props">
                 <td>{{ props.item.codigo }}</td>
-                <td class="text-xs-right">{{ props.item.nome }}</td>
-                <td class="text-xs-right">{{ props.item.cpf }}</td>
-                <td class="text-xs-right">{{ props.item.endereco }}</td>
-                <td class="text-xs-right">{{ props.item.cep }}</td>
-                <td class="text-xs-right">{{ props.item.email }}</td>
-                <td class="text-xs-right">{{ props.item.telefone }}</td>
+                <td class="text-xs-left">{{ props.item.nome }}</td>
+                <td class="text-xs-left">{{ props.item.cpf }}</td>
+                <td class="text-xs-left">{{ props.item.endereco }}</td>
+                <td class="text-xs-left">{{ props.item.cep }}</td>
+                <td class="text-xs-left">{{ props.item.email }}</td>
+                <td class="text-xs-left">{{ props.item.telefone }}</td>
+                <td class="text-xs-left">
+                  <v-btn flat icon color="red" title="Remover">
+                    <v-icon>delete</v-icon>
+                  </v-btn>
+                  <v-btn flat icon color="indigo" title="Editar">
+                    <v-icon>edit</v-icon>
+                  </v-btn>
+                  <v-btn flat icon color="black" title="Detalhar">
+                    <v-icon>more_vert</v-icon>
+                  </v-btn>
+                </td>
               </template>
               <v-alert v-slot:no-results :value="true" color="error" icon="warning">
                 Sua busca por "{{ search }}" não obteve resultados.
@@ -35,7 +46,7 @@
             </v-data-table>
             <div class="text-xs-right">
               <v-btn dark color="primary" to="/alunos/novo">
-                Novo Aluno
+                <v-icon>add</v-icon> Novo Aluno
               </v-btn>
             </div>
           </v-card>
@@ -46,6 +57,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'BuscarAluno',
   data() {
@@ -64,47 +77,18 @@ export default {
         { text: 'Endereço', value: 'endereco' },
         { text: 'CEP', value: 'cep' },
         { text: 'E-mail', value: 'email' },
-        { text: 'Telefone', value: 'telefone' }
+        { text: 'Telefone', value: 'telefone' },
+        { text: 'Ações' }
       ],
-      alunos: [
-        {
-          codigo: '123',
-          nome: 'Pessoa 1',
-          cpf: '111.111.111-11',
-          endereco: 'rua dos bobos, nº zero.',
-          cep: '99999-999',
-          email: 'pessoa1@mail.com',
-          telefone: '(99) 99999-9999'
-        },
-        {
-          codigo: '223',
-          nome: 'Pessoa 2',
-          cpf: '222.222.222-22',
-          endereco: 'rua dos bobos, nº um.',
-          cep: '88888-888',
-          email: 'pessoa2@mail.com',
-          telefone: '(88) 88888-8888'
-        },
-        {
-          codigo: '323',
-          nome: 'Pessoa 3',
-          cpf: '333.333.333-33',
-          endereco: 'rua dos bobos, nº dois.',
-          cep: '77777-777',
-          email: 'pessoa3@mail.com',
-          telefone: '(77) 77777-7777'
-        },
-        {
-          codigo: '423',
-          nome: 'Pessoa 4',
-          cpf: '444.444.444-44',
-          endereco: 'rua dos bobos, nº três.',
-          cep: '66666-666',
-          email: 'pessoa4@mail.com',
-          telefone: '(66) 66666-6666'
-        },
-      ]
+      alunos: [],
     };
+  },
+  mounted() {
+    axios.get('http://localhost:3000/api/alunos')
+      .then(response => {
+        this.alunos = response.data;
+      })
+      .catch(error => console.log(error));
   },
 };
 </script>

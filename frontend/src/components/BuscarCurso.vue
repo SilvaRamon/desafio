@@ -22,9 +22,20 @@
             >
               <template v-slot:items="props">
                 <td>{{ props.item.codigo }}</td>
-                <td class="text-xs-right">{{ props.item.nome }}</td>
-                <td class="text-xs-right">{{ props.item.dataCadastro }}</td>
-                <td class="text-xs-right">{{ props.item.cargaHoraria }}</td>
+                <td class="text-xs-left">{{ props.item.nome }}</td>
+                <td class="text-xs-left">{{ props.item.dataCadastro }}</td>
+                <td class="text-xs-left">{{ props.item.cargaHoraria }} h</td>
+                <td class="text-xs-left">
+                  <v-btn flat icon color="red" title="Remover">
+                    <v-icon>delete</v-icon>
+                  </v-btn>
+                  <v-btn flat icon color="indigo" title="Editar">
+                    <v-icon>edit</v-icon>
+                  </v-btn>
+                  <v-btn flat icon color="black"  title="Detalhar">
+                    <v-icon>more_vert</v-icon>
+                  </v-btn>
+                </td>
               </template>
               <v-alert v-slot:no-results :value="true" color="error" icon="warning">
                 Sua busca por "{{ search }}" não obteve resultados.
@@ -32,7 +43,7 @@
             </v-data-table>
             <div class="text-xs-right">
               <v-btn dark color="primary" to="/cursos/novo">
-                Novo Curso
+                <v-icon>add</v-icon> Novo Curso
               </v-btn>
             </div>
           </v-card>
@@ -50,6 +61,7 @@ export default {
   data() {
     return {
       titulo: 'Buscar cursos',
+      dialog: false,
       search: '',
         headers: [
         {
@@ -60,18 +72,24 @@ export default {
         },
         { text: 'Nome', value: 'nome' },
         { text: 'Data de Cadastro', value: 'dataCadastro' },
-        { text: 'Carga Horária', value: 'cargaHoraria' }
+        { text: 'Carga Horária (Horas)', value: 'cargaHoraria' },
+        { text: 'Ações', value: ''}
       ],
       cursos: [],
     };
   },
-  created() {
-    axios.get('http://localhost:3000/api/cursos')
-      .then(response => {
-        this.cursos = response.data;
-        console.log(this.cursos);
-      })
-      .catch(error => console.log(error));
+  methods: {
+    getCursos() {
+      axios.get('http://localhost:3000/api/cursos')
+        .then(response => {
+          this.cursos = response.data;
+          console.log(this.cursos);
+        })
+        .catch(error => console.log(error));
+    }
+  },
+  mounted() {
+    this.getCursos();
   },
 };
 </script>

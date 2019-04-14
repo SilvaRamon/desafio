@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.silvaramon.desafioapi.model.Curso;
 import com.silvaramon.desafioapi.repository.CursoRepository;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "api/cursos", method = {RequestMethod.OPTIONS})
 public class CursoController {
 	@Autowired
 	private CursoRepository cursoRepository;
 	
-	@CrossOrigin
 	@GetMapping
 	public List<Curso> findAll() {
 		return cursoRepository.findAll(); 
