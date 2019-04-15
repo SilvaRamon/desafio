@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-form v-model="validar">
+    <v-form
+      v-model="valid"
+      ref="form"
+    >
       <v-container fluid>
         <v-layout row wrap>
           
@@ -72,11 +75,20 @@
               required
             ></v-text-field>
           </v-flex>
+          <v-flex xs12 md4>
+            <v-select
+              v-model="cursoSelecionado"
+              :items="cursos"
+              item-text="nome"
+              item-value="id"
+              label="Selecione o curso"
+            ></v-select>
+          </v-flex>
           <v-flex xs12 md12 text-xs-right pt-2>
             <v-btn to="/cursos" dark color="primary">
               <v-icon>arrow_back</v-icon> Voltar
             </v-btn>
-            <v-btn dark color="primary" @click="setCurso">
+            <v-btn dark color="primary">
               <v-icon>library_add</v-icon> Cadastrar
             </v-btn>
             <v-btn dark color="primary">
@@ -90,12 +102,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'NovoAluno',
   data() {
     return {
       titulo: 'Cadastrar novo aluno',
-      validar: false,
+      valid: true,
       codigo: '',
       mascaraCodigo: '#########',
       nome: '',
@@ -107,6 +121,15 @@ export default {
       email: '',
       telefone: '',
       mascaraTelefone: '(##) #####-####',
+      cursoSelecionado: {
+        codigo: '',
+        nome: '',
+        cpf: '',
+        endereco: '',
+        cep: '',
+        email: '',
+        telefone: ''
+      },
       regrasCodigo: [
         v => !!v || 'Código é obrigatório.',
         v => v.length <= 9 || 'Código deve ter no máximo 9 dígitos.'
@@ -134,8 +157,28 @@ export default {
       regrasTelefone: [
         v => !!v || 'Telefone é obrigatório.',
         v => v.length === 11 || 'Telefone deve conter exatamente 11 dígitos.'
-      ]
+      ],
+      cursos: []
     };
   },
+  methods: {
+    validar() {
+      if (this.$refs.form.validate()) {
+        
+      }
+    },
+    limpar() {
+      this.$refs.form.reset();
+    }
+  },
+  created() {
+    axios.get('http://localhost:3000/api/cursos')
+      .then(response => {
+        this.cursos = response.data;
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+  }
 };
 </script>

@@ -2,8 +2,9 @@
   <div id="app">
     <v-app>
       <v-toolbar dark color="primary">
-        <v-toolbar-title>Desafio CEUMA</v-toolbar-title>
-        <v-spacer></v-spacer>
+        <v-flex xs2 offset-x2>
+         <v-toolbar-title>Desafio CEUMA</v-toolbar-title>
+        </v-flex>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat to="/alunos">Alunos</v-btn>
           <v-btn flat to="/cursos">Cursos</v-btn>

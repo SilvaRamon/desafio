@@ -3,52 +3,50 @@
     <v-container grid-list-md text-xs-left>
       <v-layout row wrap>
         <v-flex xs12>
-          <v-card>
-            <v-card-title class="headline font-weight-bold">
-              Lista de alunos
-              <v-spacer/>
-              <v-text-field
-                v-model="search"
-                append-icon="search"
-                label="Buscar"
-                single-line
-                hide-details
-              ></v-text-field>
-            </v-card-title>
-            <v-data-table
-              :headers="headers"
-              :items="alunos"
-              :search="search"
-            >
-              <template v-slot:items="props">
-                <td>{{ props.item.codigo }}</td>
-                <td class="text-xs-left">{{ props.item.nome }}</td>
-                <td class="text-xs-left">{{ props.item.cpf }}</td>
-                <td class="text-xs-left">{{ props.item.endereco }}</td>
-                <td class="text-xs-left">{{ props.item.cep }}</td>
-                <td class="text-xs-left">{{ props.item.email }}</td>
-                <td class="text-xs-left">{{ props.item.telefone }}</td>
-                <td class="text-xs-left">
-                  <v-btn flat icon color="red" title="Remover"
-                    @click="deleteAluno(props.item)"
-                  >
-                    <v-icon>delete</v-icon>
-                  </v-btn>
-                  <v-btn flat icon color="indigo" title="Editar">
-                    <v-icon>edit</v-icon>
-                  </v-btn>
-                </td>
-              </template>
-              <v-alert v-slot:no-results :value="true" color="error" icon="warning">
-                Sua busca por "{{ search }}" não obteve resultados.
-              </v-alert>
-            </v-data-table>
-            <div class="text-xs-right">
-              <v-btn dark color="primary" to="/alunos/novo">
-                <v-icon>add</v-icon> Novo Aluno
-              </v-btn>
-            </div>
-          </v-card>
+          <v-flex class="headline font-weight-bold">
+            Lista de alunos
+            <v-spacer/>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Buscar"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-flex>
+          <v-data-table
+            :headers="headers"
+            :items="alunos"
+            :search="search"
+          >
+            <template v-slot:items="props">
+              <td>{{ props.item.codigo }}</td>
+              <td class="text-xs-left">{{ props.item.nome }}</td>
+              <td class="text-xs-left">{{ props.item.cpf }}</td>
+              <td class="text-xs-left">{{ props.item.endereco }}</td>
+              <td class="text-xs-left">{{ props.item.cep }}</td>
+              <td class="text-xs-left">{{ props.item.email }}</td>
+              <td class="text-xs-left">{{ props.item.telefone }}</td>
+              <td class="text-xs-left">
+                <v-btn flat icon color="red" title="Remover"
+                  @click="deleteAluno(props.item)"
+                >
+                  <v-icon>delete</v-icon>
+                </v-btn>
+                <v-btn flat icon color="indigo" title="Editar">
+                  <v-icon>edit</v-icon>
+                </v-btn>
+              </td>
+            </template>
+            <v-alert v-slot:no-results :value="true" color="error" icon="warning">
+              Sua busca por "{{ search }}" não obteve resultados.
+            </v-alert>
+          </v-data-table>
+          <v-flex class="text-xs-right">
+            <v-btn dark color="primary" to="/alunos/novo">
+              <v-icon>add</v-icon> Novo Aluno
+            </v-btn>
+          </v-flex>
         </v-flex>
       </v-layout>
     </v-container>
@@ -87,7 +85,6 @@ export default {
       axios.delete('http://localhost:3000/api/alunos/'+obj.id)
         .then(response => {
           this.alunos.splice(this.alunos.indexOf(obj), 1);
-          console.log(response.status);
         })
         .catch(error => {
           console.log(error.response);
@@ -97,7 +94,7 @@ export default {
   mounted() {
     axios.get('http://localhost:3000/api/alunos') 
       .then(response => {
-        this.alunos = response.data;
+        this.alunos = response.data;y
       })
       .catch(error => console.log(error));
   },
