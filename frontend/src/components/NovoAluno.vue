@@ -77,7 +77,7 @@
           </v-flex>
           <v-flex xs12 md4>
             <v-select
-              v-model="cursoSelecionado"
+              v-model="idCurso"
               :items="cursos"
               item-text="nome"
               item-value="id"
@@ -88,7 +88,7 @@
             <v-btn to="/cursos" dark color="primary">
               <v-icon>arrow_back</v-icon> Voltar
             </v-btn>
-            <v-btn dark color="primary">
+            <v-btn dark color="primary" @click="validar">
               <v-icon>library_add</v-icon> Cadastrar
             </v-btn>
             <v-btn dark color="primary">
@@ -135,15 +135,7 @@ export default {
       email: '',
       telefone: '',
       mascaraTelefone: '(##) #####-####',
-      cursoSelecionado: {
-        codigo: '',
-        nome: '',
-        cpf: '',
-        endereco: '',
-        cep: '',
-        email: '',
-        telefone: ''
-      },
+      idCurso: '',
       regrasCodigo: [
         v => !!v || 'Código é obrigatório.',
         v => v.length <= 9 || 'Código deve ter no máximo 9 dígitos.'
@@ -183,8 +175,12 @@ export default {
       let cpfRegex = /(\d{3})(\d{3})(\d{3})(\d{2})/g;
       let cepRegex = /(\d{5})(\d{3})/g;
       let telRegex = /(\d{2})(\d{5})(\d{4})/g;
-      
-      axios.post('http://localhost:3000/api/', {
+
+      console.log(this.idCurso);
+
+      axios.post(
+        'http://localhost:3000/api/alunos/'+this.idCurso+'/curso',
+      {
         codigo: this.codigo,
         nome: this.nome,
         cpf: this.cpf.replace(cpfRegex, "$1.$2.$3-$4"),
@@ -201,14 +197,13 @@ export default {
       .catch(error => {
         this.snackbar = true;
         this.snackbarColor = 'error';
-        this.snackbarMsg = 'Ocorreu um erro!';
+        this.snackbarMsg = 'Ocorreu um erro! ' + error.response;
       });
     },
     validar() {
       if (this.$refs.form.validate()) {
         this.setAluno();
       }
-      this.limpar();
     },
     limpar() {
       this.$refs.form.reset();

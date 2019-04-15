@@ -2,10 +2,7 @@ package com.silvaramon.desafioapi.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,11 +13,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.silvaramon.desafioapi.model.Aluno;
 import com.silvaramon.desafioapi.repository.AlunoRepository;
+import com.silvaramon.desafioapi.repository.CursoRepository;
 
 @CrossOrigin
 @RestController
@@ -29,21 +26,25 @@ public class AlunoController {
 	@Autowired
 	private AlunoRepository alunoRepository;
 	
+	@Autowired
+	private CursoRepository cursoRepository;
+	
 	@GetMapping
-	public List<Aluno> findAll() {
+	public List<Aluno> all() {
 		return alunoRepository.findAll();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Aluno> findById(@PathVariable Long id) {
+	public ResponseEntity<Aluno> get(@PathVariable Long id) {
 		return alunoRepository.findById(id)
 				.map(result -> ResponseEntity.ok().body(result))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@PostMapping
-	@ResponseStatus(code=HttpStatus.CREATED)
-	public Aluno addAluno(@RequestBody Aluno aluno) {
+	@PostMapping("/{idCurso}/curso")
+	public Aluno post(@RequestBody Aluno aluno, @PathVariable Long idCurso) {
+		aluno.setCurso(cursoRepository
+						.findById(idCurso).get());
 		return alunoRepository.save(aluno);
 	}
 	
@@ -58,7 +59,7 @@ public class AlunoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Aluno> update(@PathVariable Long id, @RequestBody Aluno aluno){
+	public ResponseEntity<Aluno> put(@PathVariable Long id, @RequestBody Aluno aluno){
 		return alunoRepository.findById(id)
 				.map(result -> {
 					result.setCodigo(aluno.getCodigo()); 
