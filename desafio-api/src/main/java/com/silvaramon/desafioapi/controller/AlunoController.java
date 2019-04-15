@@ -47,12 +47,14 @@ public class AlunoController {
 		return alunoRepository.save(aluno);
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Object> delete(@PathVariable Long id) {
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Aluno> delete(@PathVariable Long id) {
 		return alunoRepository.findById(id)
-				.map(result -> {alunoRepository.deleteById(id);
-	            return ResponseEntity.ok().build();
-			}).orElse(ResponseEntity.notFound().build());
+				.map(result -> {
+					alunoRepository.deleteById(id);
+					return ResponseEntity.ok().body(result);
+				})
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PutMapping("/{id}")
@@ -69,6 +71,7 @@ public class AlunoController {
 					result.setEndereco(aluno.getEndereco()); 
 					Aluno updated = alunoRepository.save(result);
 					return ResponseEntity.ok().body(updated);
-				}).orElse(ResponseEntity.notFound().build());
+				})
+				.orElse(ResponseEntity.notFound().build());
 	}
 }

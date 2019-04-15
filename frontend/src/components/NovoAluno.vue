@@ -95,6 +95,20 @@
               <v-icon>clear</v-icon> Limpar
             </v-btn>
           </v-flex>
+          <v-flex>
+            <v-snackbar
+              v-model="snackbar"
+              :color="snackbarColor"
+              :multi-line="true"
+              :timeout="3000"
+              :vertical="false"
+            >
+              {{ snackbarMsg }}
+              <v-btn dark flat @click="snackbar = false">
+                Fechar
+              </v-btn>
+            </v-snackbar>
+          </v-flex>
         </v-layout>
       </v-container>
     </v-form>
@@ -158,14 +172,43 @@ export default {
         v => !!v || 'Telefone é obrigatório.',
         v => v.length === 11 || 'Telefone deve conter exatamente 11 dígitos.'
       ],
-      cursos: []
+      cursos: [],
+      snackbar: false,
+      snackbarColor: '',
+      snackbarMsg: ''
     };
   },
   methods: {
+    setAluno() {
+      let cpfRegex = /(\d{3})(\d{3})(\d{3})(\d{2})/g;
+      let cepRegex = /(\d{5})(\d{3})/g;
+      let telRegex = /(\d{2})(\d{5})(\d{4})/g;
+      
+      axios.post('http://localhost:3000/api/', {
+        codigo: this.codigo,
+        nome: this.nome,
+        cpf: this.cpf.replace(cpfRegex, "$1.$2.$3-$4"),
+        endereco: this.endereco,
+        cep: this.cep.replace(cpfRegex, "$1-$2"),
+        email: this.email,
+        telefone: this.telefone.replace(telRegex, "($1) $2-$3")
+      })
+      .then(response => {
+        this.snackbar = true;
+        this.snackbarColor = 'success';
+        this.snackbarMsg = 'Cadastro realizado com sucesso!';
+      })
+      .catch(error => {
+        this.snackbar = true;
+        this.snackbarColor = 'error';
+        this.snackbarMsg = 'Ocorreu um erro!';
+      });
+    },
     validar() {
       if (this.$refs.form.validate()) {
-        
+        this.setAluno();
       }
+      this.limpar();
     },
     limpar() {
       this.$refs.form.reset();

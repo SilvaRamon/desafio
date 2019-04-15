@@ -120,11 +120,12 @@ export default {
   },
   methods: {
     setCurso() {
+      let dataRegex = /(\d{2})(\d{2})(\d{4})/g;
       axios.post('http://localhost:3000/api/cursos', {
         codigo: this.codigo,
         nome: this.nome,
         cargaHoraria: this.cargaHoraria,
-        dataCadastro: this.dataCadastro
+        dataCadastro: this.dataCadastro.replace(dataRegex, "$1/$2/$3")
       })
       .then(response => {
         this.snackbar = true;
@@ -134,13 +135,34 @@ export default {
       .catch(error => {
         this.snackbar = true;
         this.snackbarColor = 'error';
-        this.snackbarMsg = 'Ocorreu um erro!'
+        this.snackbarMsg = 'Ocorreu um erro!';
       });
+    },
+    validarData(data) {
+      let dataRegex1 = /(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/[12][0-9]{3}/g;
+      let dataRegex2 = /(\d{2})(\d{2})(\d{4})/g;
+
+      if ( ! data.replace(dataRegex2, "$1/$2/$3").match(dataRegex1)) {
+        console.log("nao passou! data nao existe!");
+        return false;
+      }
+
+      let hoje = new Date();
+      let dataHoje = hoje.substring(0, 11);
+
+      if (parseInt(data) <= parseInt(dataHoje)) {
+        console.log("passou! " + data + "  " + dataHoje);
+        return true;
+      } else {
+        console.log("nao passou! " + data + "  " + dataHoje);
+        return false;
+      }
     },
     validar() {
       if (this.$refs.form.validate()) {
         this.setCurso();
       }
+      this.limpar();
     },
     limpar() {
       this.$refs.form.reset();

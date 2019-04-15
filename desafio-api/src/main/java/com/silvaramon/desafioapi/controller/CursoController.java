@@ -40,16 +40,18 @@ public class CursoController {
 	
 	@PostMapping
 	@ResponseStatus(code=HttpStatus.CREATED)
-	public Curso addAluno(@RequestBody Curso curso) {
+	public Curso addCurso(@RequestBody Curso curso) {
 		return cursoRepository.save(curso);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Curso> delete(@PathVariable Long id) {
 		return cursoRepository.findById(id)
-				.map(result -> {cursoRepository.deleteById(id);
-	            return ResponseEntity.ok().body(result);
-			}).orElse(ResponseEntity.notFound().build());
+				.map(result -> {
+					cursoRepository.deleteById(id);
+					return ResponseEntity.ok().body(result);
+				})
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PutMapping("/{id}")
@@ -62,6 +64,7 @@ public class CursoController {
 					result.setCargaHoraria(curso.getCargaHoraria());
 					Curso updated = cursoRepository.save(result);
 					return ResponseEntity.ok().body(updated);
-				}).orElse(ResponseEntity.notFound().build());
+				})
+				.orElse(ResponseEntity.notFound().build());
 	}
 }

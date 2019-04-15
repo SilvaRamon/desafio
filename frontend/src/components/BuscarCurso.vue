@@ -44,6 +44,7 @@
                         flat icon color="black"
                         title="Alunos do curso"
                         v-on="on"
+                        v-show="props.item.alunos.length > 0"
                       >
                         <v-icon>people</v-icon>
                       </v-btn>

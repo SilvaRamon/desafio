@@ -3,6 +3,7 @@ package com.silvaramon.desafioapi.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,21 +13,22 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class Aluno {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
-	@Column
+	@Column(name = "codigo")
 	private Long codigo;
-	@Column
+	@Column(name = "nome")
 	private String nome;
-	@Column
+	@Column(name = "cpf")
 	private String cpf;
-	@Column
+	@Column(name = "cep")
 	private String cep;
-	@Column
+	@Column(name = "endereco")
 	private String endereco;
-	@Column
+	@Column(name = "email")
 	private String email;
-	@Column
+	@Column(name = "telefone")
 	private String telefone;
 	@ManyToOne
 	@JoinColumn(name = "id_curso")
