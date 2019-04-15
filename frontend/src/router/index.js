@@ -19,6 +19,7 @@ export default new Router({
       path: '/alunos/novo',
       name: 'NovoAluno',
       component: NovoAluno,
+      props: true,
     },
     {
       path: '/cursos',
@@ -29,6 +30,7 @@ export default new Router({
       path: '/cursos/novo',
       name: 'NovoCurso',
       component: NovoCurso,
+      props: true,
     },
   ],
 });

@@ -9,7 +9,8 @@
         <v-layout row wrap>
           
           <v-flex xs12 class="headline font-weight-bold">
-              {{ titulo }}
+            <!-- Edit é uma prop passada pela rota -->
+            {{ edit ? 'Editar curso ' + id_curso : titulo }}
           </v-flex>
           <v-flex xs12 md4>
             <v-text-field
@@ -55,7 +56,10 @@
               <v-icon>arrow_back</v-icon> Voltar
             </v-btn>
             <v-btn dark color="primary" @click="validar">
-              <v-icon>library_add</v-icon> Cadastrar
+              <v-icon>
+                {{ edit ? 'save' : 'library_add' }}
+              </v-icon>
+              {{ edit ? 'Salvar' : 'Cadastrar' }}
             </v-btn>
             <v-btn dark color="primary" @click="limpar">
               <v-icon>clear</v-icon> Limpar
@@ -86,6 +90,7 @@ import axios from 'axios';
 
 export default {
   name: 'NovoCurso',
+  props: ['edit', 'id_curso'],
   data() {
     return {
       titulo: 'Cadastrar novo curso',
@@ -138,6 +143,37 @@ export default {
         this.snackbarMsg = 'Ocorreu um erro!';
       });
     },
+    updateCurso() {
+      let dataRegex = /(\d{2})(\d{2})(\d{4})/g;
+      axios.put('http://localhost:3000/api/cursos/'+this.$props.id_curso, {
+        id: this.$props.id_curso,
+        codigo: this.codigo,
+        nome: this.nome,
+        cargaHoraria: this.cargaHoraria,
+        dataCadastro: this.dataCadastro.replace(dataRegex, "$1/$2/$3")
+      })
+      .then(response => {
+        this.snackbar = true;
+        this.snackbarColor = 'success';
+        this.snackbarMsg = 'Cadastro realizado com sucesso!';
+      })
+      .catch(error => {
+        this.snackbar = true;
+        this.snackbarColor = 'error';
+        this.snackbarMsg = 'Ocorreu um erro!';
+      });
+    },
+    getCurso() {
+      axios.get('http://localhost:3000/api/cursos/'+this.$props.id_curso)
+      .then(response => {
+        // Resgatando os dados da requisicão
+        this.codigo = response.data.codigo;
+        this.nome = response.data.nome;
+        this.cargaHoraria = response.data.cargaHoraria;
+        this.dataCadastro = response.data.dataCadastro;
+      })
+      .catch(error => { console.log(error.response) });
+    },
     validarData(data) {
       let dataRegex1 = /(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/[12][0-9]{3}/g;
       let dataRegex2 = /(\d{2})(\d{2})(\d{4})/g;
@@ -160,7 +196,11 @@ export default {
     },
     validar() {
       if (this.$refs.form.validate()) {
-        this.setCurso();
+        if( ! this.$props.edit) {
+          this.setCurso();
+        }{
+          this.updateCurso();
+        }
       }
       this.limpar();
     },
@@ -168,5 +208,8 @@ export default {
       this.$refs.form.reset();
     }
   },
+  mounted() {
+    this.getCurso();
+  }
 };
 </script>

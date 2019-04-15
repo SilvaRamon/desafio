@@ -58,8 +58,8 @@ public class AlunoController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<Aluno> put(@PathVariable Long id, @RequestBody Aluno aluno){
+	@PutMapping("/{id}/curso/{idCurso}")
+	public ResponseEntity<Aluno> put(@PathVariable Long id, @PathVariable Long idCurso, @RequestBody Aluno aluno){
 		return alunoRepository.findById(id)
 				.map(result -> {
 					result.setCodigo(aluno.getCodigo()); 
@@ -69,7 +69,8 @@ public class AlunoController {
 					result.setCep(aluno.getCep());
 					result.setEmail(aluno.getEmail());
 					result.setTelefone(aluno.getTelefone());
-					result.setEndereco(aluno.getEndereco()); 
+					result.setCurso(cursoRepository
+							.findById(idCurso).get());
 					Aluno updated = alunoRepository.save(result);
 					return ResponseEntity.ok().body(updated);
 				})

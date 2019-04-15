@@ -27,12 +27,12 @@ public class CursoController {
 	private CursoRepository cursoRepository;
 	
 	@GetMapping
-	public List<Curso> findAll() {
+	public List<Curso> all() {
 		return cursoRepository.findAll(); 
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Curso> findById(@PathVariable Long id) {
+	public ResponseEntity<Curso> get(@PathVariable Long id) {
 		return cursoRepository.findById(id)
 				.map(result -> ResponseEntity.ok().body(result))
 				.orElse(ResponseEntity.notFound().build());
@@ -40,7 +40,7 @@ public class CursoController {
 	
 	@PostMapping
 	@ResponseStatus(code=HttpStatus.CREATED)
-	public Curso addCurso(@RequestBody Curso curso) {
+	public Curso post(@RequestBody Curso curso) {
 		return cursoRepository.save(curso);
 	}
 	
@@ -55,7 +55,7 @@ public class CursoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Curso> update(@PathVariable Long id, @RequestBody Curso curso){
+	public ResponseEntity<Curso> put(@PathVariable Long id, @RequestBody Curso curso){
 		return cursoRepository.findById(id)
 				.map(result -> {
 					result.setCodigo(curso.getCodigo()); 

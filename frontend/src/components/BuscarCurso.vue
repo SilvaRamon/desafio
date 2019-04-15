@@ -30,7 +30,11 @@
                 >
                   <v-icon>delete</v-icon>
                 </v-btn>
-                <v-btn flat icon color="indigo" title="Editar">
+                <v-btn 
+                  flat icon color="indigo" 
+                  title="Editar"
+                  :to="{ name: 'NovoCurso', params: { edit: true, id_curso: props.item.id }}"
+                >
                   <v-icon>edit</v-icon>
                 </v-btn>
                 <v-btn

@@ -33,7 +33,11 @@
                 >
                   <v-icon>delete</v-icon>
                 </v-btn>
-                <v-btn flat icon color="indigo" title="Editar">
+                <v-btn
+                  flat icon color="indigo"
+                  title="Editar"
+                  :to="{ name: 'NovoAluno', params: { edit: true, id_aluno: props.item.id }}"
+                >
                   <v-icon>edit</v-icon>
                 </v-btn>
               </td>
@@ -94,7 +98,7 @@ export default {
   mounted() {
     axios.get('http://localhost:3000/api/alunos') 
       .then(response => {
-        this.alunos = response.data;y
+        this.alunos = response.data;
       })
       .catch(error => console.log(error));
   },
