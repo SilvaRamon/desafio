@@ -181,7 +181,7 @@ export default {
       if (this.$refs.form.validate()) {
         if( ! this.$props.edit) {
           this.setCurso();
-        }{
+        } else {
           this.updateCurso();
         }
         this.limpar();
@@ -192,7 +192,9 @@ export default {
     },
   },
   mounted() {
-    this.getCurso();
+    if (this.$props.edit) {
+      this.getCurso();
+    }
   }
 };
 </script>
