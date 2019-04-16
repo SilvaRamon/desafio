@@ -92,6 +92,7 @@ export default {
   props: ['edit', 'id_curso'],
   data() {
     return {
+      menu: false,
       titulo: 'Cadastrar novo curso',
       valid: true,
       codigo: '',
@@ -99,7 +100,10 @@ export default {
       nome: '',
       cargaHoraria: '',
       mascaraCargaHoraria: '####',
-      dataCadastro: '',
+      dataCadastro: new Date()
+        .toISOString()
+        .substr(0, 10)
+        .replace(/(\d{4})-(\d{2})-(\d{2})/g, "$3$2$1"),
       mascaraData: '##/##/####',
       regrasCodigo: [
         v => !!v || 'Código é obrigatório.',
@@ -180,13 +184,12 @@ export default {
         }{
           this.updateCurso();
         }
-        this.$router.push({name: 'BuscarCurso'});
         this.limpar();
       }
     },
     limpar() {
       this.$refs.form.reset();
-    }
+    },
   },
   mounted() {
     this.getCurso();

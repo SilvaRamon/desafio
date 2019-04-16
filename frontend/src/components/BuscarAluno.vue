@@ -22,9 +22,19 @@
           >
             <template v-slot:items="props">
               <td>{{ props.item.codigo }}</td>
-              <td class="text-xs-left">{{ props.item.nome }}</td>
+              <td
+                class="text-xs-left"
+                style="max-width:1000px!important"
+              >
+                {{ props.item.nome }}
+              </td>
               <td class="text-xs-left">{{ props.item.cpf }}</td>
-              <td class="text-xs-left">{{ props.item.endereco }}</td>
+              <td
+                style="max-width:100px!important" 
+                class="text-xs-left"
+              >
+                {{ props.item.endereco }}
+              </td>
               <td class="text-xs-left">{{ props.item.cep }}</td>
               <td class="text-xs-left">{{ props.item.email }}</td>
               <td class="text-xs-left">{{ props.item.telefone }}</td>

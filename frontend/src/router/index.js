@@ -11,6 +11,11 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/',
+      name: 'Index',
+      redirect: '/alunos'
+    },
+    {
       path: '/alunos',
       name: 'BuscarAluno',
       component: BuscarAluno,

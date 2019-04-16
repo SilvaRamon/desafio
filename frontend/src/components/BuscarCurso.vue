@@ -69,7 +69,18 @@
           class="headline grey lighten-2"
           primary-title
         >
-          Lista de alunos
+          <v-flex xs6>
+            Lista de alunos
+          </v-flex>
+          <v-flex xs6 class="text-xs-right">
+            <v-btn
+              icon
+              color="primary"
+              @click="cursoAlunosDialog = false"
+            >
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-flex>
         </v-card-title>
         <v-card-text>
           <v-data-table
@@ -87,15 +98,6 @@
             </template>
           </v-data-table>
         </v-card-text>
-        <v-card-actions class="text-xs-right">
-          <v-btn
-            color="primary"
-            flat
-            @click="cursoAlunosDialog = false"
-          >
-            Fechar
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
