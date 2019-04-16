@@ -7,10 +7,9 @@
     >
       <v-container fluid>
         <v-layout row wrap>
-          
           <v-flex xs12 class="headline font-weight-bold">
             <!-- Edit é uma prop passada pela rota -->
-            {{ edit ? 'Editar curso ' + id_curso : titulo }}
+            {{ edit ? 'Editar curso ' : titulo }}
           </v-flex>
           <v-flex xs12 md4>
             <v-text-field
@@ -174,26 +173,6 @@ export default {
       })
       .catch(error => { console.log(error.response) });
     },
-    validarData(data) {
-      let dataRegex1 = /(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/[12][0-9]{3}/g;
-      let dataRegex2 = /(\d{2})(\d{2})(\d{4})/g;
-
-      if ( ! data.replace(dataRegex2, "$1/$2/$3").match(dataRegex1)) {
-        console.log("nao passou! data nao existe!");
-        return false;
-      }
-
-      let hoje = new Date();
-      let dataHoje = hoje.substring(0, 11);
-
-      if (parseInt(data) <= parseInt(dataHoje)) {
-        console.log("passou! " + data + "  " + dataHoje);
-        return true;
-      } else {
-        console.log("nao passou! " + data + "  " + dataHoje);
-        return false;
-      }
-    },
     validar() {
       if (this.$refs.form.validate()) {
         if( ! this.$props.edit) {
@@ -201,8 +180,9 @@ export default {
         }{
           this.updateCurso();
         }
+        this.$router.push({name: 'BuscarCurso'});
+        this.limpar();
       }
-      this.limpar();
     },
     limpar() {
       this.$refs.form.reset();

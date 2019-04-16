@@ -6,9 +6,8 @@
     >
       <v-container fluid>
         <v-layout row wrap>
-          
           <v-flex xs12 class="headline font-weight-bold">
-              {{ edit ? 'Editar aluno' + idCurso : titulo }}
+              {{ edit ? 'Editar aluno' : titulo }}
           </v-flex>
           <v-flex xs12 md4>
             <v-text-field
@@ -82,6 +81,8 @@
               item-text="nome"
               item-value="id"
               label="Selecione o curso"
+              :rules="regrasCurso"
+              required
             ></v-select>
           </v-flex>
           <v-flex xs12 md12 text-xs-right pt-2>
@@ -168,6 +169,9 @@ export default {
         v => !!v || 'Telefone é obrigatório.',
         v => v.length === 11 || 'Telefone deve conter exatamente 11 dígitos.'
       ],
+      regrasCurso: [
+        v => !!v || 'Curso é obrigatório.'
+      ],
       cursos: [],
       snackbar: false,
       snackbarColor: '',
@@ -180,10 +184,9 @@ export default {
       let cepRegex = /(\d{5})(\d{3})/g;
       let telRegex = /(\d{2})(\d{5})(\d{4})/g;
 
-      console.log(this.idCurso);
-
       axios.post(
-        'http://localhost:3000/api/alunos/',
+        'http://localhost:3000/api/alunos/'+
+          this.idCurso+'/curso',
       {
         codigo: this.codigo,
         nome: this.nome,
@@ -238,8 +241,8 @@ export default {
         } else {
           this.updateAluno();
         }
+        this.limpar();
       }
-      this.limpar();
     },
     limpar() {
       this.$refs.form.reset();
@@ -273,7 +276,10 @@ export default {
   },
   mounted() {
     this.getCursos();
-    this.getAluno();
+
+    if (this.$props.edit) {
+      this.getAluno();
+    }
   }
 };
 </script>
