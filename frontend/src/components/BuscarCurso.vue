@@ -165,6 +165,8 @@ export default {
       this.cursoSelecionado = obj.alunos;
     },
     toCsv(args) {
+      // Codigo encontrado em: 
+      //  https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
       var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
       data = args.data || null;
@@ -195,6 +197,8 @@ export default {
       return result;
     },
     downloadCsv(args) {
+      // Codigo encontrado em: 
+      //  https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
       var data, filename, link;
       var csv = this.toCsv({
         data: this.cursos
